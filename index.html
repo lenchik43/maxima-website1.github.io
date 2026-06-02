@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxima Спортивные бальные танцы</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0A1628;
+            --navy: #0D2137;
+            --ice-blue: #B8D4E8;
+            --crystal: #E8F0F7;
+            --white: #FFFFFF;
+            --accent: #4A90B8;
+            --muted-blue: #6B8BA4;
+            --border-glow: 1px solid rgba(184, 212, 232, 0.25);
+            --danger: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--deep-blue);
+            color: var(--crystal);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(74, 144, 184, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(184, 212, 232, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============ HEADER ============ */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 22, 40, 0.85);
+            border-bottom: var(--border-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 4px;
+        }
+        .logo span { color: var(--ice-blue); font-weight: 300; }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 101;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        .burger span {
+            width: 25px; height: 2px;
+            background: var(--ice-blue);
+            transition: 0.3s;
+        }
+        .burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .burger.active span:nth-child(2) { opacity: 0; }
+        .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        nav { display: flex; gap: 2rem; align-items: center; }
+        nav a {
+            color: var(--ice-blue);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--white);
+            transition: width 0.3s ease;
+        }
+        nav a:hover { color: var(--white); }
+        nav a:hover::after { width: 100%; }
+        .nav-phone { color: var(--white) !important; font-weight: 600 !important; }
+
+        /* ============ HERO ============ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0 60px;
+        }
+        .hero-bg {
+            position: absolute;
+            right: 0; top: 0;
+            width: 55%; height: 100%;
+            background: url('https://psv4.userapi.com/s/v1/d2/dXjbgbJkwnUjC42UThgLu0RICr_ODV1_13BGw1ZdcUMKH3a8viNmV47nS0Y-WNjVHs3MSAY5v0GeL40mKhERIPxb1ajPedkYpKddC5VrS-NNRpZVR26bxhgavEzGd-wcrqhQV8wGNzZA/slide2.jpg') center/cover no-repeat;
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(13, 33, 55, 0.85) 0%, rgba(10, 22, 40, 0.35) 100%);
+        }
+        .hero-content {
+            position: relative; z-index: 10;
+            padding: 0 4rem; max-width: 650px;
+        }
+        .hero-sub {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--ice-blue);
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+        .hero-title {
+            font-size: 4.5rem;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+        .hero-title em {
+            font-style: italic;
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--ice-blue);
+        }
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--muted-blue);
+            margin-bottom: 2.5rem;
+            border-left: 2px solid var(--ice-blue);
+            padding-left: 1.5rem;
+            max-width: 380px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 1.5px solid var(--ice-blue);
+            background: transparent;
+            color: var(--white);
+            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            font-family: 'Inter', sans-serif;
+        }
+        .btn:hover {
+            background: var(--white);
+            color: var(--deep-blue);
+            clip-path: polygon(0% 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        /* ============ SCHEDULE ============ */
+        .schedule {
+            padding: 5rem 0;
+            background: var(--navy);
+        }
+        .section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--ice-blue);
+            margin-bottom: 0.5rem;
+        }
+        .section-title {
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            line-height: 1.1;
+        }
+        .schedule-filters {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .filter-row {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid rgba(184, 212, 232, 0.15);
+            flex-wrap: wrap;
+        }
+        .filter-label {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--muted-blue);
+            display: flex;
+            align-items: center;
+            border-right: 1px solid rgba(184, 212, 232, 0.1);
+            min-width: 90px;
+        }
+        .filter-tab {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted-blue);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            transition: 0.3s;
+        }
+        .filter-tab:hover { color: var(--white); }
+        .filter-tab.active { color: var(--white); font-weight: 600; }
+        .filter-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0;
+            width: 100%; height: 2px;
+            background: var(--ice-blue);
+        }
+        .schedule-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+        .schedule-table thead th {
+            text-align: left;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--ice-blue);
+            border-bottom: 1px solid rgba(184, 212, 232, 0.2);
+        }
+        .schedule-table tbody td {
+            padding: 0.8rem 1.2rem;
+            border-bottom: 1px solid rgba(184, 212, 232, 0.08);
+            font-size: 0.85rem;
+        }
+        .schedule-table tbody tr:hover td { background: rgba(255, 255, 255, 0.02); }
+        .schedule-day { font-weight: 600; color: var(--white); }
+        .schedule-time { color: var(--ice-blue); font-weight: 500; }
+        .schedule-type { color: var(--muted-blue); font-size: 0.8rem; }
+        .no-schedule { text-align: center; padding: 2rem; color: var(--muted-blue); font-size: 0.9rem; }
+
+        /* ============ COACHES ============ */
+        .coaches { padding: 5rem 0; overflow: hidden; }
+        .coaches-track {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            animation: scrollCoaches 30s linear infinite;
+            width: max-content;
+        }
+        .coaches-track:hover { animation-play-state: paused; }
+        @keyframes scrollCoaches {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .coach-card {
+            text-align: center;
+            padding: 1.5rem 1.2rem;
+            border: 1px solid rgba(184, 212, 232, 0.12);
+            transition: 0.3s;
+            min-width: 200px;
+            background: rgba(10, 22, 40, 0.5);
+        }
+        .coach-card:hover {
+            border-color: var(--ice-blue);
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-3px);
+        }
+        .coach-avatar {
+            width: 75px; height: 75px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--navy), var(--deep-blue));
+            border: 2px solid var(--ice-blue);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--ice-blue);
+        }
+        .coach-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--white);
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+        }
+        .coach-role {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted-blue);
+            white-space: nowrap;
+        }
+
+        /* ============ GALLERY ============ */
+        .gallery { padding: 5rem 0; background: var(--navy); }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.4rem;
+            margin-top: 2rem;
+        }
+        .gallery-item {
+            aspect-ratio: 1;
+            background: var(--deep-blue);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(184, 212, 232, 0.08);
+            transition: 0.3s;
+        }
+        .gallery-item:hover { border-color: var(--ice-blue); transform: scale(1.02); z-index: 10; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-placeholder {
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted-blue);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* ============ LIGHTBOX ============ */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 85%; object-fit: contain; border: 1px solid rgba(184, 212, 232, 0.2); }
+        .lightbox-close {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            color: var(--white); font-size: 2rem;
+            cursor: pointer; background: none; border: none; font-weight: 300;
+        }
+        .lightbox-close:hover { color: var(--ice-blue); }
+        .lightbox-prev, .lightbox-next {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            color: var(--white); font-size: 2.5rem;
+            cursor: pointer; background: none; border: none; font-weight: 300; padding: 0.5rem;
+        }
+        .lightbox-prev { left: 1rem; }
+        .lightbox-next { right: 1rem; }
+        .lightbox-prev:hover, .lightbox-next:hover { color: var(--ice-blue); }
+
+        /* ============ CONTACTS ============ */
+        .contacts { padding: 5rem 0; background: var(--deep-blue); border-top: var(--border-glow); }
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+            align-items: start;
+        }
+        .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+        .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+        .contact-dot {
+            width: 8px; height: 8px;
+            background: var(--ice-blue);
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+        .contact-text h4 {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted-blue);
+            margin-bottom: 0.2rem;
+            font-weight: 500;
+        }
+        .contact-text p, .contact-text a {
+            color: var(--white);
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: 400;
+            transition: 0.3s;
+        }
+        .contact-text a:hover { color: var(--ice-blue); }
+        .map-container {
+            width: 100%;
+            aspect-ratio: 1;
+            border: 1px solid rgba(184, 212, 232, 0.15);
+            overflow: hidden;
+        }
+        .map-container iframe { width: 100%; height: 100%; border: none; }
+
+        /* ============ ADMIN ============ */
+        .admin-login-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-login-overlay.active { display: flex; }
+        .admin-login-box {
+            background: var(--navy);
+            border: 1px solid var(--ice-blue);
+            padding: 2.5rem;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+        }
+        .admin-login-box h2 { color: var(--white); margin-bottom: 1rem; font-size: 1.3rem; }
+        .admin-login-box p { color: var(--muted-blue); margin-bottom: 1.5rem; font-size: 0.75rem; }
+        .admin-login-box input {
+            width: 100%; padding: 0.7rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(184, 212, 232, 0.3);
+            color: var(--white); text-align: center;
+            font-size: 1.1rem; letter-spacing: 3px;
+            margin-bottom: 0.8rem; outline: none;
+        }
+        .login-error { color: var(--danger); font-size: 0.7rem; margin-bottom: 0.8rem; display: none; }
+        .login-error.active { display: block; }
+        .btn-submit {
+            width: 100%; padding: 0.8rem;
+            background: var(--ice-blue); color: var(--deep-blue);
+            font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; border: none;
+            cursor: pointer; transition: 0.3s;
+            font-family: 'Inter', sans-serif; font-size: 0.8rem;
+        }
+        .btn-submit:hover { background: var(--white); }
+
+        .admin-panel {
+            position: fixed;
+            top: 50%; right: -460px;
+            transform: translateY(-50%);
+            width: 440px;
+            background: rgba(13, 33, 55, 0.98);
+            border: 1px solid var(--ice-blue);
+            padding: 1.5rem;
+            z-index: 2999;
+            transition: right 0.4s ease;
+            backdrop-filter: blur(20px);
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+        }
+        .admin-panel.active { right: 15px; }
+        .admin-panel h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--ice-blue);
+            padding-bottom: 0.5rem;
+        }
+        .admin-section {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(184, 212, 232, 0.1);
+        }
+        .admin-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .admin-section h4 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--ice-blue);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        .admin-field { margin-bottom: 0.7rem; }
+        .admin-field label {
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted-blue);
+            margin-bottom: 0.2rem;
+        }
+        .admin-field input,
+        .admin-field textarea,
+        .admin-field select {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(184, 212, 232, 0.2);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .admin-field textarea { resize: vertical; min-height: 50px; }
+        .admin-field input:focus,
+        .admin-field textarea:focus,
+        .admin-field select:focus { border-color: var(--ice-blue); }
+        .admin-field select option { background: var(--navy); color: var(--white); }
+
+        .schedule-day-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1.5fr 1fr 0.5fr;
+            gap: 0.4rem;
+            margin-bottom: 0.4rem;
+            align-items: end;
+        }
+        .schedule-day-row input,
+        .schedule-day-row select {
+            padding: 0.4rem;
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(184, 212, 232, 0.2);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            outline: none;
+        }
+        .schedule-day-row .btn-del {
+            padding: 0.4rem;
+            background: transparent;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .schedule-day-row .btn-del:hover { background: var(--danger); color: var(--white); }
+
+        .admin-btn {
+            width: 100%;
+            padding: 0.6rem;
+            background: transparent;
+            border: 1px solid var(--ice-blue);
+            color: var(--ice-blue);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.7rem;
+            transition: 0.3s;
+            margin-top: 0.4rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .admin-btn:hover { background: var(--ice-blue); color: var(--deep-blue); }
+        .admin-btn.danger { border-color: var(--danger); color: var(--danger); }
+        .admin-btn.danger:hover { background: var(--danger); color: var(--white); }
+        .admin-btn.add { border-color: var(--success); color: var(--success); }
+        .admin-btn.add:hover { background: var(--success); color: var(--white); }
+        .admin-hint { font-size: 0.6rem; color: var(--muted-blue); margin-top: 0.8rem; text-align: center; }
+        .admin-logout {
+            position: absolute; top: 0.8rem; right: 1rem;
+            background: none; border: none;
+            color: var(--muted-blue); cursor: pointer;
+            font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .admin-logout:hover { color: var(--danger); }
+
+        /* ============ FOOTER ============ */
+        footer { padding: 1.5rem; text-align: center; border-top: var(--border-glow); font-size: 0.7rem; color: var(--muted-blue); }
+
+        /* ============ MOBILE ============ */
+        @media (max-width: 768px) {
+            .hero-content { padding: 0 1rem; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-bg { width: 100%; opacity: 0.6; }
+            .burger { display: flex; }
+            nav {
+                position: fixed;
+                top: 0; right: -100%;
+                width: 70%; height: 100vh;
+                background: rgba(10, 22, 40, 0.98);
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                gap: 1.5rem;
+                transition: right 0.3s;
+                border-left: var(--border-glow);
+                backdrop-filter: blur(20px);
+            }
+            nav.active { right: 0; }
+            nav a { font-size: 0.9rem; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .contacts-grid { grid-template-columns: 1fr; }
+            .schedule-day-row { grid-template-columns: 1fr 1fr 1fr; }
+            .admin-panel { width: 95%; right: -100%; }
+            .admin-panel.active { right: 2.5%; }
+            .coach-card { min-width: 160px; }
+            .lightbox-prev { left: 0.5rem; font-size: 2rem; }
+            .lightbox-next { right: 0.5rem; font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">MAX<span>IMA</span></div>
+    <button class="burger" id="burger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </button>
+    <nav id="nav">
+        <a href="#home" onclick="closeMenu()">Главная</a>
+        <a href="#schedule" onclick="closeMenu()">Расписание</a>
+        <a href="#coaches" onclick="closeMenu()">Тренеры</a>
+        <a href="#gallery" onclick="closeMenu()">Галерея</a>
+        <a href="#contacts" onclick="closeMenu()">Контакты</a>
+        <a href="tel:#" class="nav-phone" id="navPhone">#</a>
+    </nav>
+</header>
+
+<main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="hero-sub"></p>
+            <h1 class="hero-title">Движение <br><em>к совершенству</em></h1>
+            <p class="hero-desc" id="heroDescText">#</p>
+            <a href="#contacts" class="btn">Связаться с нами</a>
+        </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="schedule" id="schedule">
+        <div class="container">
+            <p class="section-label">Тренировки</p>
+            <h2 class="section-title">Расписание</h2>
+            <div class="schedule-filters">
+                <div class="filter-row" id="schoolRow">
+                    <span class="filter-label">Школа</span>
+                </div>
+                <div class="filter-row" id="groupRow">
+                    <span class="filter-label">Группа</span>
+                </div>
+            </div>
+            <div class="schedule-table-wrap">
+                <table class="schedule-table">
+                    <thead><tr><th>День</th><th>Время</th><th>Занятие</th><th>Зал</th></tr></thead>
+                    <tbody id="scheduleBody">
+                        <tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- COACHES -->
+    <section class="coaches" id="coaches">
+        <div class="container">
+            <p class="section-label">Команда</p>
+            <h2 class="section-title">Тренеры клуба</h2>
+        </div>
+        <div class="coaches-track" id="coachesTrack"></div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <p class="section-label">Моменты</p>
+            <h2 class="section-title">Галерея</h2>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="contacts" id="contacts">
+        <div class="container">
+            <p class="section-label">Связь</p>
+            <h2 class="section-title">Контакты</h2>
+            <div class="contacts-grid">
+                <div class="contact-info" id="contactInfo"></div>
+                <div class="map-container"><iframe src="https://yandex.ru/map-widget/v1/?ll=44.448748%2C48.676587&z=15&pt=44.448748,48.676587,pm2rdm" allowfullscreen></iframe></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>2026 Maxima Dance Club</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&#10005;</button>
+    <button class="lightbox-prev" onclick="event.stopPropagation(); prevImage()">&#8249;</button>
+    <img id="lightboxImg" src="" alt="">
+    <button class="lightbox-next" onclick="event.stopPropagation(); nextImage()">&#8250;</button>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="admin-login-overlay" id="adminLoginOverlay">
+    <div class="admin-login-box">
+        <h2>Вход в админ-панель</h2>
+        <p>Введите пароль</p>
+        <input type="password" id="adminPasswordInput" placeholder="••••••" onkeydown="if(event.key==='Enter')checkAdminPassword()">
+        <div class="login-error" id="loginError">Неверный пароль</div>
+        <button class="btn-submit" onclick="checkAdminPassword()">Войти</button>
+        <p style="margin-top:0.8rem;font-size:0.65rem;color:var(--muted-blue);"><code style="color:var(--ice-blue);"></code></p>
+    </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+    <button class="admin-logout" onclick="logoutAdmin()">Выйти</button>
+    <h3>Управление сайтом</h3>
+
+    <!-- HERO -->
+    <div class="admin-section">
+        <h4>Главный экран</h4>
+        <div class="admin-field">
+            <label>Текст под заголовком</label>
+            <textarea id="adminHeroDesc" rows="2"></textarea>
+        </div>
+        <div class="admin-field">
+            <label>Ссылка на фото Hero</label>
+            <input type="text" id="adminHeroImage" placeholder="URL картинки">
+        </div>
+        <div class="admin-field">
+            <label>Или загрузить фото с ПК</label>
+            <input type="file" id="adminHeroUpload" accept="image/*" onchange="uploadHeroImage(event)">
+        </div>
+    </div>
+
+    <!-- КОНТАКТЫ -->
+    <div class="admin-section">
+        <h4>Контакты</h4>
+        <div class="admin-field"><label>Телефон</label><input type="text" id="adminPhone"></div>
+        <div class="admin-field"><label>Email</label><input type="text" id="adminEmail"></div>
+        <div class="admin-field"><label>Адрес</label><input type="text" id="adminAddress"></div>
+        <div class="admin-field"><label>Часы работы</label><input type="text" id="adminHours"></div>
+    </div>
+
+    <!-- РАСПИСАНИЕ -->
+    <div class="admin-section">
+        <h4>Расписание — конструктор</h4>
+        <div class="admin-field">
+            <label>1. Выберите школу и группу</label>
+            <select id="adminSelectSchool" onchange="updateAdminGroupSelect()">
+                <option value="">Школа</option>
+            </select>
+            <select id="adminSelectGroup" onchange="loadGroupToConstructor()">
+                <option value="">Группа</option>
+            </select>
+        </div>
+        <div class="admin-field">
+            <label>2. Дни занятий</label>
+            <div id="scheduleDaysList"></div>
+            <button class="admin-btn add" onclick="addDayRow()">+ Добавить день</button>
+            <button class="admin-btn" onclick="saveGroupFromConstructor()" style="margin-top:0.5rem;">Сохранить эту группу</button>
+        </div>
+    </div>
+
+    <!-- ТРЕНЕРЫ -->
+    <div class="admin-section">
+        <h4>Тренеры</h4>
+        <div class="admin-field">
+            <label>Имя|Роль (каждый с новой строки)</label>
+            <textarea id="adminCoaches" rows="4"></textarea>
+        </div>
+    </div>
+
+    <!-- ГАЛЕРЕЯ -->
+    <div class="admin-section">
+        <h4>Галерея</h4>
+        <div class="admin-field">
+            <label>Ссылки на фото (каждая с новой строки)</label>
+            <textarea id="adminGallery" rows="3"></textarea>
+        </div>
+        <div class="admin-field">
+            <label>Загрузить с компьютера</label>
+            <input type="file" id="adminPhotoUpload" accept="image/*" multiple onchange="uploadPhotos(event)">
+        </div>
+    </div>
+
+    <button class="admin-btn" onclick="saveAllChanges()">Сохранить всё</button>
+    <button class="admin-btn danger" onclick="resetToDefault()">Сбросить</button>
+    <p class="admin-hint">Ctrl + ~ открыть | Esc закрыть</p>
+</div>
+
+<script>
+    const ADMIN_PASSWORD = 'maxima2026';
+    let adminLoggedIn = false;
+    let tempDays = [];
+
+    const defaultFullSchedule = {
+        "Школа №54": { "Старшая группа": [], "Юниоры": [], "Дети": [], "Взрослые": [] },
+        "Школа №55": { "Старшая группа": [], "Юниоры": [] },
+        "Школа №140": { "Старшая группа": [], "Юниоры": [], "Дети": [] }
+    };
+
+    const defaultData = {
+        heroDesc: "#",
+        heroImage: "https://psv4.userapi.com/s/v1/d2/dXjbgbJkwnUjC42UThgLu0RICr_ODV1_13BGw1ZdcUMKH3a8viNmV47nS0Y-WNjVHs3MSAY5v0GeL40mKhERIPxb1ajPedkYpKddC5VrS-NNRpZVR26bxhgavEzGd-wcrqhQV8wGNzZA/slide2.jpg",
+        phone: "#",
+        email: "#",
+        address: "#",
+        hours: "#",
+        fullSchedule: JSON.parse(JSON.stringify(defaultFullSchedule)),
+        coaches: [
+            { name: "#", role: "#" },
+            { name: "#", role: "#" },
+            { name: "#", role: "#" },
+            { name: "#", role: "#" },
+            { name: "#", role: "#" }
+        ],
+        gallery: []
+    };
+
+    function loadData() {
+        const saved = localStorage.getItem('maximaSiteDataV3');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                return {
+                    heroDesc: parsed.heroDesc || "#",
+                    heroImage: parsed.heroImage || defaultData.heroImage,
+                    phone: parsed.phone || "#",
+                    email: parsed.email || "#",
+                    address: parsed.address || "#",
+                    hours: parsed.hours || "#",
+                    fullSchedule: parsed.fullSchedule || JSON.parse(JSON.stringify(defaultFullSchedule)),
+                    coaches: parsed.coaches || [...defaultData.coaches],
+                    gallery: parsed.gallery || []
+                };
+            } catch(e) {}
+        }
+        return JSON.parse(JSON.stringify(defaultData));
+    }
+
+    let siteData = loadData();
+    let galleryImages = siteData.gallery;
+    let currentLightboxIndex = 0;
+    let selectedSchool = null;
+    let selectedGroup = null;
+
+    // ============ ОТРИСОВКА ============
+    function renderAll() {
+        document.getElementById('heroDescText').textContent = siteData.heroDesc;
+        document.getElementById('navPhone').textContent = siteData.phone;
+        document.getElementById('navPhone').href = 'tel:' + siteData.phone.replace(/[^+\d]/g, '');
+        updateHeroBackground();
+        renderContacts();
+        buildFilters();
+        renderCoaches();
+        renderGallery();
+    }
+
+    function updateHeroBackground() {
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg && siteData.heroImage) {
+            heroBg.style.backgroundImage = 'url(' + siteData.heroImage + ')';
+        }
+    }
+
+    function renderContacts() {
+        document.getElementById('contactInfo').innerHTML = `
+            <div class="contact-item"><div class="contact-dot"></div><div class="contact-text"><h4>Телефон</h4><a href="tel:${siteData.phone.replace(/[^+\d]/g, '')}">${siteData.phone}</a></div></div>
+            <div class="contact-item"><div class="contact-dot"></div><div class="contact-text"><h4>Email</h4><a href="mailto:${siteData.email}">${siteData.email}</a></div></div>
+            <div class="contact-item"><div class="contact-dot"></div><div class="contact-text"><h4>Адрес</h4><p>${siteData.address}</p></div></div>
+            <div class="contact-item"><div class="contact-dot"></div><div class="contact-text"><h4>Часы работы</h4><p>${siteData.hours}</p></div></div>
+        `;
+    }
+
+    function buildFilters() {
+        const schoolRow = document.getElementById('schoolRow');
+        const groupRow = document.getElementById('groupRow');
+        schoolRow.querySelectorAll('.filter-tab').forEach(el => el.remove());
+        groupRow.querySelectorAll('.filter-tab').forEach(el => el.remove());
+        Object.keys(siteData.fullSchedule).sort().forEach(school => {
+            const tab = document.createElement('button');
+            tab.className = 'filter-tab';
+            tab.textContent = school;
+            tab.onclick = function() { selectSchool(school, this); };
+            schoolRow.appendChild(tab);
+        });
+    }
+
+    function selectSchool(school, tabElement) {
+        selectedSchool = school;
+        selectedGroup = null;
+        document.querySelectorAll('#schoolRow .filter-tab').forEach(t => t.classList.remove('active'));
+        tabElement.classList.add('active');
+        const groupRow = document.getElementById('groupRow');
+        groupRow.querySelectorAll('.filter-tab').forEach(el => el.remove());
+        if (siteData.fullSchedule[school]) {
+            Object.keys(siteData.fullSchedule[school]).sort().forEach(group => {
+                const tab = document.createElement('button');
+                tab.className = 'filter-tab';
+                tab.textContent = group;
+                tab.onclick = function() { selectGroup(group, this); };
+                groupRow.appendChild(tab);
+            });
+        }
+        document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите группу</td></tr>';
+    }
+
+    function selectGroup(group, tabElement) {
+        selectedGroup = group;
+        document.querySelectorAll('#groupRow .filter-tab').forEach(t => t.classList.remove('active'));
+        tabElement.classList.add('active');
+        renderScheduleTable();
+    }
+
+    function renderScheduleTable() {
+        const tbody = document.getElementById('scheduleBody');
+        if (!selectedSchool || !selectedGroup) {
+            tbody.innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
+            return;
+        }
+        const data = siteData.fullSchedule[selectedSchool]?.[selectedGroup] || [];
+        if (data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="no-schedule">Расписание пока не заполнено</td></tr>';
+            return;
+        }
+        tbody.innerHTML = data.map(item =>
+            '<tr><td class="schedule-day">' + item.day + '</td><td class="schedule-time">' + item.time + '</td><td class="schedule-type">' + item.type + '</td><td class="schedule-type">' + item.hall + '</td></tr>'
+        ).join('');
+    }
+
+    function renderCoaches() {
+        const track = document.getElementById('coachesTrack');
+        const doubled = [...siteData.coaches, ...siteData.coaches];
+        track.innerHTML = doubled.map(c =>
+            '<div class="coach-card"><div class="coach-avatar">' + c.name.charAt(0) + '</div><div class="coach-name">' + c.name + '</div><div class="coach-role">' + c.role + '</div></div>'
+        ).join('');
+    }
+
+    function renderGallery() {
+        galleryImages = siteData.gallery;
+        const grid = document.getElementById('galleryGrid');
+        if (galleryImages.length > 0) {
+            grid.innerHTML = galleryImages.map((url, i) =>
+                '<div class="gallery-item" onclick="openLightbox(' + i + ')"><img src="' + url + '" alt=""></div>'
+            ).join('');
+        } else {
+            grid.innerHTML = [1,2,3,4,5,6].map((_, i) =>
+                '<div class="gallery-item"><div class="gallery-placeholder">Фото ' + (i+1) + '</div></div>'
+            ).join('');
+        }
+    }
+
+    // ============ LIGHTBOX ============
+    function openLightbox(index) { if (galleryImages.length === 0) return; currentLightboxIndex = index; document.getElementById('lightbox').classList.add('active'); updateLightboxImage(); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+    function prevImage() { currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length; updateLightboxImage(); }
+    function nextImage() { currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length; updateLightboxImage(); }
+    function updateLightboxImage() { document.getElementById('lightboxImg').src = galleryImages[currentLightboxIndex]; }
+
+    // ============ БУРГЕР ============
+    function toggleMenu() { document.getElementById('nav').classList.toggle('active'); document.getElementById('burger').classList.toggle('active'); }
+    function closeMenu() { document.getElementById('nav').classList.remove('active'); document.getElementById('burger').classList.remove('active'); }
+
+    // ============ АДМИН ============
+    function openAdminLogin() {
+        if (adminLoggedIn) {
+            document.getElementById('adminPanel').classList.toggle('active');
+            if (document.getElementById('adminPanel').classList.contains('active')) fillAdminPanel();
+        } else {
+            document.getElementById('adminLoginOverlay').classList.add('active');
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('loginError').classList.remove('active');
+        }
+    }
+    function checkAdminPassword() {
+        if (document.getElementById('adminPasswordInput').value === ADMIN_PASSWORD) {
+            adminLoggedIn = true;
+            document.getElementById('adminLoginOverlay').classList.remove('active');
+            document.getElementById('adminPanel').classList.add('active');
+            fillAdminPanel();
+        } else { document.getElementById('loginError').classList.add('active'); }
+    }
+    function logoutAdmin() { adminLoggedIn = false; document.getElementById('adminPanel').classList.remove('active'); }
+
+    function fillAdminPanel() {
+        document.getElementById('adminHeroDesc').value = siteData.heroDesc;
+        document.getElementById('adminHeroImage').value = siteData.heroImage || '';
+        document.getElementById('adminPhone').value = siteData.phone;
+        document.getElementById('adminEmail').value = siteData.email;
+        document.getElementById('adminAddress').value = siteData.address;
+        document.getElementById('adminHours').value = siteData.hours;
+        document.getElementById('adminCoaches').value = siteData.coaches.map(c => c.name + '|' + c.role).join('\n');
+        document.getElementById('adminGallery').value = siteData.gallery.join('\n');
+        updateAdminSelects();
+        tempDays = [];
+        renderConstructorDays();
+    }
+
+    function uploadHeroImage(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('adminHeroImage').value = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // ============ КОНСТРУКТОР РАСПИСАНИЯ ============
+    function updateAdminSelects() {
+        const schoolSelect = document.getElementById('adminSelectSchool');
+        schoolSelect.innerHTML = '<option value="">Школа</option>';
+        Object.keys(siteData.fullSchedule).sort().forEach(s => {
+            schoolSelect.innerHTML += '<option value="' + s + '">' + s + '</option>';
+        });
+        document.getElementById('adminSelectGroup').innerHTML = '<option value="">Группа</option>';
+    }
+
+    function updateAdminGroupSelect() {
+        const school = document.getElementById('adminSelectSchool').value;
+        const groupSelect = document.getElementById('adminSelectGroup');
+        groupSelect.innerHTML = '<option value="">Группа</option>';
+        if (school && siteData.fullSchedule[school]) {
+            Object.keys(siteData.fullSchedule[school]).sort().forEach(g => {
+                groupSelect.innerHTML += '<option value="' + g + '">' + g + '</option>';
+            });
+        }
+        tempDays = [];
+        renderConstructorDays();
+    }
+
+    function loadGroupToConstructor() {
+        const school = document.getElementById('adminSelectSchool').value;
+        const group = document.getElementById('adminSelectGroup').value;
+        if (school && group && siteData.fullSchedule[school]?.[group]) {
+            tempDays = JSON.parse(JSON.stringify(siteData.fullSchedule[school][group]));
+        } else {
+            tempDays = [];
+        }
+        renderConstructorDays();
+    }
+
+    function renderConstructorDays() {
+        const list = document.getElementById('scheduleDaysList');
+        if (tempDays.length === 0) {
+            list.innerHTML = '<p style="color:var(--muted-blue);font-size:0.7rem;padding:0.5rem 0;">Нет дней. Нажмите «+ Добавить день»</p>';
+            return;
+        }
+        list.innerHTML = tempDays.map((d, i) =>
+            '<div class="schedule-day-row">' +
+                '<select onchange="tempDays[' + i + '].day=this.value">' +
+                    ['ПН','ВТ','СР','ЧТ','ПТ','СБ','ВС'].map(day => 
+                        '<option' + (d.day === day ? ' selected' : '') + '>' + day + '</option>'
+                    ).join('') +
+                '</select>' +
+                '<input type="text" value="' + d.time + '" placeholder="Время" onchange="tempDays[' + i + '].time=this.value">' +
+                '<input type="text" value="' + d.type + '" placeholder="Занятие" onchange="tempDays[' + i + '].type=this.value">' +
+                '<input type="text" value="' + d.hall + '" placeholder="Зал" onchange="tempDays[' + i + '].hall=this.value">' +
+                '<button class="btn-del" onclick="deleteDay(' + i + ')">X</button>' +
+            '</div>'
+        ).join('');
+    }
+
+    function addDayRow() {
+        tempDays.push({ day: 'ПН', time: '', type: '', hall: '' });
+        renderConstructorDays();
+    }
+
+    function deleteDay(index) {
+        tempDays.splice(index, 1);
+        renderConstructorDays();
+    }
+
+    function saveGroupFromConstructor() {
+        const school = document.getElementById('adminSelectSchool').value;
+        const group = document.getElementById('adminSelectGroup').value;
+        if (!school || !group) { alert('Выберите школу и группу!'); return; }
+        if (!siteData.fullSchedule[school]) siteData.fullSchedule[school] = {};
+        siteData.fullSchedule[school][group] = JSON.parse(JSON.stringify(tempDays));
+        alert('Группа «' + group + '» сохранена! Нажмите «Сохранить всё» чтобы применить.');
+    }
+
+    // ============ ФОТО ============
+    function uploadPhotos(event) {
+        const files = event.target.files;
+        if (!files.length) return;
+        let loaded = 0;
+        for (let i = 0; i < files.length; i++) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const ta = document.getElementById('adminGallery');
+                ta.value = ta.value.trim() ? ta.value + '\n' + e.target.result : e.target.result;
+                loaded++;
+                if (loaded === files.length) alert('Загружено ' + files.length + ' фото. Нажмите «Сохранить всё»');
+            };
+            reader.readAsDataURL(files[i]);
+        }
+    }
+
+    // ============ СОХРАНЕНИЕ ============
+    function saveAllChanges() {
+        if (!adminLoggedIn) return;
+        try {
+            siteData.heroDesc = document.getElementById('adminHeroDesc').value || "#";
+            siteData.heroImage = document.getElementById('adminHeroImage').value || defaultData.heroImage;
+            siteData.phone = document.getElementById('adminPhone').value || "#";
+            siteData.email = document.getElementById('adminEmail').value || "#";
+            siteData.address = document.getElementById('adminAddress').value || "#";
+            siteData.hours = document.getElementById('adminHours').value || "#";
+            siteData.coaches = document.getElementById('adminCoaches').value.split('\n').filter(l => l.trim()).map(l => {
+                const p = l.split('|');
+                return { name: p[0]?.trim() || "#", role: p[1]?.trim() || "#" };
+            });
+            siteData.gallery = document.getElementById('adminGallery').value.split('\n').filter(l => l.trim());
+
+            localStorage.setItem('maximaSiteDataV3', JSON.stringify(siteData));
+            galleryImages = siteData.gallery;
+            renderAll();
+            updateAdminSelects();
+            document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
+            selectedSchool = null;
+            selectedGroup = null;
+            alert('Сохранено!');
+        } catch(e) {
+            alert('Ошибка: ' + e.message);
+        }
+    }
+
+    function resetToDefault() {
+        if (!adminLoggedIn) return;
+        if (confirm('Сбросить всё на решётки?')) {
+            siteData = JSON.parse(JSON.stringify(defaultData));
+            localStorage.setItem('maximaSiteDataV3', JSON.stringify(siteData));
+            galleryImages = [];
+            selectedSchool = null;
+            selectedGroup = null;
+            tempDays = [];
+            renderAll();
+            document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
+            fillAdminPanel();
+            alert('Сброшено');
+        }
+    }
+
+    // ============ КЛАВИШИ ============
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === '`' || e.key === 'ё')) {
+            e.preventDefault();
+            openAdminLogin();
+        }
+        if (e.key === 'Escape') {
+            document.getElementById('adminPanel').classList.remove('active');
+            document.getElementById('adminLoginOverlay').classList.remove('active');
+            closeLightbox();
+            closeMenu();
+        }
+        if (document.getElementById('lightbox').classList.contains('active')) {
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+        }
+    });
+
+    // ============ СКРОЛЛ ============
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // ============ ПАРАЛЛАКС ============
+    const heroBgEl = document.querySelector('.hero-bg');
+    if (heroBgEl) {
+        window.addEventListener('mousemove', function(e) {
+            const x = (window.innerWidth / 2 - e.clientX) / 80;
+            const y = (window.innerHeight / 2 - e.clientY) / 80;
+            heroBgEl.style.transform = 'translateX(' + x + 'px) translateY(' + y + 'px)';
+        });
+    }
+
+    // ============ СТАРТ ============
+    renderAll();
+    document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
+    console.log('🕺 Maxima Dance Club | Ctrl+~ админ-панель');
+</script>
+
+</body>
+</html>
