@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxima Спортивные бальные танцы</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Maxima Dance Club | Спортивные бальные танцы</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
     <style>
         :root {
             --deep-blue: #0A1628;
@@ -135,7 +140,9 @@
             position: absolute;
             right: 0; top: 0;
             width: 55%; height: 100%;
-            background: url('https://psv4.userapi.com/s/v1/d2/dXjbgbJkwnUjC42UThgLu0RICr_ODV1_13BGw1ZdcUMKH3a8viNmV47nS0Y-WNjVHs3MSAY5v0GeL40mKhERIPxb1ajPedkYpKddC5VrS-NNRpZVR26bxhgavEzGd-wcrqhQV8wGNzZA/slide2.jpg') center/cover no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
         }
         .hero-bg::after {
@@ -611,6 +618,18 @@
         }
         .admin-logout:hover { color: var(--danger); }
 
+        .sync-status {
+            text-align: center;
+            font-size: 0.65rem;
+            padding: 0.3rem;
+            margin-bottom: 0.8rem;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .sync-status.online { color: var(--success); border: 1px solid var(--success); }
+        .sync-status.offline { color: var(--danger); border: 1px solid var(--danger); }
+        .sync-status.syncing { color: #ffcc00; border: 1px solid #ffcc00; }
+
         /* ============ FOOTER ============ */
         footer { padding: 1.5rem; text-align: center; border-top: var(--border-glow); font-size: 0.7rem; color: var(--muted-blue); }
 
@@ -663,18 +682,16 @@
 </header>
 
 <main>
-    <!-- HERO -->
     <section class="hero" id="home">
-        <div class="hero-bg"></div>
+        <div class="hero-bg" id="heroBg"></div>
         <div class="hero-content">
             <p class="hero-sub"></p>
             <h1 class="hero-title">Движение <br><em>к совершенству</em></h1>
-            <p class="hero-desc" id="heroDescText">#</p>
+            <p class="hero-desc" id="heroDescText">Загрузка...</p>
             <a href="#contacts" class="btn">Связаться с нами</a>
         </div>
     </section>
 
-    <!-- SCHEDULE -->
     <section class="schedule" id="schedule">
         <div class="container">
             <p class="section-label">Тренировки</p>
@@ -691,14 +708,13 @@
                 <table class="schedule-table">
                     <thead><tr><th>День</th><th>Время</th><th>Занятие</th><th>Зал</th></tr></thead>
                     <tbody id="scheduleBody">
-                        <tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>
+                        <tr><td colspan="4" class="no-schedule">Загрузка...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
 
-    <!-- COACHES -->
     <section class="coaches" id="coaches">
         <div class="container">
             <p class="section-label">Команда</p>
@@ -707,7 +723,6 @@
         <div class="coaches-track" id="coachesTrack"></div>
     </section>
 
-    <!-- GALLERY -->
     <section class="gallery" id="gallery">
         <div class="container">
             <p class="section-label">Моменты</p>
@@ -716,7 +731,6 @@
         </div>
     </section>
 
-    <!-- CONTACTS -->
     <section class="contacts" id="contacts">
         <div class="container">
             <p class="section-label">Связь</p>
@@ -731,7 +745,6 @@
 
 <footer>2026 Maxima Dance Club</footer>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <button class="lightbox-close" onclick="closeLightbox()">&#10005;</button>
     <button class="lightbox-prev" onclick="event.stopPropagation(); prevImage()">&#8249;</button>
@@ -739,7 +752,6 @@
     <button class="lightbox-next" onclick="event.stopPropagation(); nextImage()">&#8250;</button>
 </div>
 
-<!-- ADMIN LOGIN -->
 <div class="admin-login-overlay" id="adminLoginOverlay">
     <div class="admin-login-box">
         <h2>Вход в админ-панель</h2>
@@ -751,12 +763,11 @@
     </div>
 </div>
 
-<!-- ADMIN PANEL -->
 <div class="admin-panel" id="adminPanel">
     <button class="admin-logout" onclick="logoutAdmin()">Выйти</button>
     <h3>Управление сайтом</h3>
+    <div class="sync-status" id="syncStatus">Проверка подключения</div>
 
-    <!-- HERO -->
     <div class="admin-section">
         <h4>Главный экран</h4>
         <div class="admin-field">
@@ -773,7 +784,6 @@
         </div>
     </div>
 
-    <!-- КОНТАКТЫ -->
     <div class="admin-section">
         <h4>Контакты</h4>
         <div class="admin-field"><label>Телефон</label><input type="text" id="adminPhone"></div>
@@ -782,17 +792,12 @@
         <div class="admin-field"><label>Часы работы</label><input type="text" id="adminHours"></div>
     </div>
 
-    <!-- РАСПИСАНИЕ -->
     <div class="admin-section">
-        <h4>Расписание — конструктор</h4>
+        <h4>Расписание</h4>
         <div class="admin-field">
             <label>1. Выберите школу и группу</label>
-            <select id="adminSelectSchool" onchange="updateAdminGroupSelect()">
-                <option value="">Школа</option>
-            </select>
-            <select id="adminSelectGroup" onchange="loadGroupToConstructor()">
-                <option value="">Группа</option>
-            </select>
+            <select id="adminSelectSchool" onchange="updateAdminGroupSelect()"><option value="">Школа</option></select>
+            <select id="adminSelectGroup" onchange="loadGroupToConstructor()"><option value="">Группа</option></select>
         </div>
         <div class="admin-field">
             <label>2. Дни занятий</label>
@@ -802,7 +807,6 @@
         </div>
     </div>
 
-    <!-- ТРЕНЕРЫ -->
     <div class="admin-section">
         <h4>Тренеры</h4>
         <div class="admin-field">
@@ -811,7 +815,6 @@
         </div>
     </div>
 
-    <!-- ГАЛЕРЕЯ -->
     <div class="admin-section">
         <h4>Галерея</h4>
         <div class="admin-field">
@@ -824,21 +827,35 @@
         </div>
     </div>
 
-    <button class="admin-btn" onclick="saveAllChanges()">Сохранить всё</button>
+    <button class="admin-btn" onclick="saveAllChanges()">Сохранить всё </button>
     <button class="admin-btn danger" onclick="resetToDefault()">Сбросить</button>
-    <p class="admin-hint">Ctrl + ~ открыть | Esc закрыть</p>
+    <p class="admin-hint">Ctrl + ~ открыть </p>
 </div>
 
 <script>
+    // ============ FIREBASE ============
+    const firebaseConfig = {
+        apiKey: "AIzaSyCz8BeQ6H-EGvhTxB90eQ7Bp_H2QYBz4M8",
+        authDomain: "maxima-dance.firebaseapp.com",
+        projectId: "maxima-dance",
+        storageBucket: "maxima-dance.firebasestorage.app",
+        messagingSenderId: "153926363704",
+        appId: "1:153926363704:web:ff092c2fdf3846dfa994cd"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    
+    // Единственный документ в базе
+    const SITE_DOC = db.collection('siteData').doc('current');
+
     const ADMIN_PASSWORD = 'maxima2026';
     let adminLoggedIn = false;
     let tempDays = [];
-
-    const defaultFullSchedule = {
-        "Школа №54": { "Старшая группа": [], "Юниоры": [], "Дети": [], "Взрослые": [] },
-        "Школа №55": { "Старшая группа": [], "Юниоры": [] },
-        "Школа №140": { "Старшая группа": [], "Юниоры": [], "Дети": [] }
-    };
+    let galleryImages = [];
+    let currentLightboxIndex = 0;
+    let selectedSchool = null;
+    let selectedGroup = null;
 
     const defaultData = {
         heroDesc: "#",
@@ -847,7 +864,11 @@
         email: "#",
         address: "#",
         hours: "#",
-        fullSchedule: JSON.parse(JSON.stringify(defaultFullSchedule)),
+        fullSchedule: {
+            "Школа №54": { "Старшая группа": [], "Средняя группа": [], "Дети": [] },
+            "Школа №55": { "Старшая группа": [], "Средняя группа": [] },
+            "Школа №140": { "Старшая группа": [], "Средняя группа": [], "Дети": [] }
+        },
         coaches: [
             { name: "#", role: "#" },
             { name: "#", role: "#" },
@@ -858,34 +879,73 @@
         gallery: []
     };
 
-    function loadData() {
-        const saved = localStorage.getItem('maximaSiteDataV3');
-        if (saved) {
-            try {
-                const parsed = JSON.parse(saved);
-                return {
-                    heroDesc: parsed.heroDesc || "#",
-                    heroImage: parsed.heroImage || defaultData.heroImage,
-                    phone: parsed.phone || "#",
-                    email: parsed.email || "#",
-                    address: parsed.address || "#",
-                    hours: parsed.hours || "#",
-                    fullSchedule: parsed.fullSchedule || JSON.parse(JSON.stringify(defaultFullSchedule)),
-                    coaches: parsed.coaches || [...defaultData.coaches],
-                    gallery: parsed.gallery || []
-                };
-            } catch(e) {}
-        }
-        return JSON.parse(JSON.stringify(defaultData));
+    let siteData = JSON.parse(JSON.stringify(defaultData));
+
+    //  ЗАГРУЗКА ДАННЫХ ИЗ FIREBASE 
+    function setSyncStatus(status) {
+        const el = document.getElementById('syncStatus');
+        if (!el) return;
+        el.className = 'sync-status ' + status;
+        if (status === 'online') el.textContent = 'Данные синхронизированы с облаком';
+        if (status === 'offline') el.textContent = 'Нет подключения — используются локальные данные';
+        if (status === 'syncing') el.textContent = 'Синхронизация...';
     }
 
-    let siteData = loadData();
-    let galleryImages = siteData.gallery;
-    let currentLightboxIndex = 0;
-    let selectedSchool = null;
-    let selectedGroup = null;
+    function loadFromFirebase() {
+        setSyncStatus('syncing');
+        SITE_DOC.get().then(function(doc) {
+            if (doc.exists) {
+                const data = doc.data();
+                siteData = {
+                    heroDesc: data.heroDesc || "#",
+                    heroImage: data.heroImage || defaultData.heroImage,
+                    phone: data.phone || "#",
+                    email: data.email || "#",
+                    address: data.address || "#",
+                    hours: data.hours || "#",
+                    fullSchedule: data.fullSchedule || defaultData.fullSchedule,
+                    coaches: data.coaches || defaultData.coaches,
+                    gallery: data.gallery || []
+                };
+                setSyncStatus('online');
+            } else {
+                // сохраняем данные по умолчанию
+                SITE_DOC.set(defaultData);
+                setSyncStatus('online');
+            }
+            renderAll();
+        }).catch(function(error) {
+            console.error('Ошибка загрузки из Firebase:', error);
+            // Загружаем из localStorage 
+            const saved = localStorage.getItem('maximaSiteDataV3');
+            if (saved) {
+                try { siteData = JSON.parse(saved); } catch(e) {}
+            }
+            setSyncStatus('offline');
+            renderAll();
+        });
+    }
 
-    // ============ ОТРИСОВКА ============
+    SITE_DOC.onSnapshot(function(doc) {
+        if (doc.exists) {
+            const data = doc.data();
+            siteData = {
+                heroDesc: data.heroDesc || "#",
+                heroImage: data.heroImage || defaultData.heroImage,
+                phone: data.phone || "#",
+                email: data.email || "#",
+                address: data.address || "#",
+                hours: data.hours || "#",
+                fullSchedule: data.fullSchedule || defaultData.fullSchedule,
+                coaches: data.coaches || defaultData.coaches,
+                gallery: data.gallery || []
+            };
+            setSyncStatus('online');
+            renderAll();
+        }
+    });
+
+    // ОТРИСОВКА
     function renderAll() {
         document.getElementById('heroDescText').textContent = siteData.heroDesc;
         document.getElementById('navPhone').textContent = siteData.phone;
@@ -898,7 +958,7 @@
     }
 
     function updateHeroBackground() {
-        const heroBg = document.querySelector('.hero-bg');
+        const heroBg = document.getElementById('heroBg');
         if (heroBg && siteData.heroImage) {
             heroBg.style.backgroundImage = 'url(' + siteData.heroImage + ')';
         }
@@ -925,6 +985,7 @@
             tab.onclick = function() { selectSchool(school, this); };
             schoolRow.appendChild(tab);
         });
+        document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
     }
 
     function selectSchool(school, tabElement) {
@@ -991,14 +1052,12 @@
         }
     }
 
-    // ============ LIGHTBOX ============
     function openLightbox(index) { if (galleryImages.length === 0) return; currentLightboxIndex = index; document.getElementById('lightbox').classList.add('active'); updateLightboxImage(); }
     function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
     function prevImage() { currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length; updateLightboxImage(); }
     function nextImage() { currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length; updateLightboxImage(); }
     function updateLightboxImage() { document.getElementById('lightboxImg').src = galleryImages[currentLightboxIndex]; }
 
-    // ============ БУРГЕР ============
     function toggleMenu() { document.getElementById('nav').classList.toggle('active'); document.getElementById('burger').classList.toggle('active'); }
     function closeMenu() { document.getElementById('nav').classList.remove('active'); document.getElementById('burger').classList.remove('active'); }
 
@@ -1047,7 +1106,6 @@
         reader.readAsDataURL(file);
     }
 
-    // ============ КОНСТРУКТОР РАСПИСАНИЯ ============
     function updateAdminSelects() {
         const schoolSelect = document.getElementById('adminSelectSchool');
         schoolSelect.innerHTML = '<option value="">Школа</option>';
@@ -1087,12 +1145,11 @@
             list.innerHTML = '<p style="color:var(--muted-blue);font-size:0.7rem;padding:0.5rem 0;">Нет дней. Нажмите «+ Добавить день»</p>';
             return;
         }
+        const days = ['ПН','ВТ','СР','ЧТ','ПТ','СБ','ВС'];
         list.innerHTML = tempDays.map((d, i) =>
             '<div class="schedule-day-row">' +
                 '<select onchange="tempDays[' + i + '].day=this.value">' +
-                    ['ПН','ВТ','СР','ЧТ','ПТ','СБ','ВС'].map(day => 
-                        '<option' + (d.day === day ? ' selected' : '') + '>' + day + '</option>'
-                    ).join('') +
+                    days.map(day => '<option' + (d.day === day ? ' selected' : '') + '>' + day + '</option>').join('') +
                 '</select>' +
                 '<input type="text" value="' + d.time + '" placeholder="Время" onchange="tempDays[' + i + '].time=this.value">' +
                 '<input type="text" value="' + d.type + '" placeholder="Занятие" onchange="tempDays[' + i + '].type=this.value">' +
@@ -1102,26 +1159,18 @@
         ).join('');
     }
 
-    function addDayRow() {
-        tempDays.push({ day: 'ПН', time: '', type: '', hall: '' });
-        renderConstructorDays();
-    }
-
-    function deleteDay(index) {
-        tempDays.splice(index, 1);
-        renderConstructorDays();
-    }
+    function addDayRow() { tempDays.push({ day: 'ПН', time: '', type: '', hall: '' }); renderConstructorDays(); }
+    function deleteDay(index) { tempDays.splice(index, 1); renderConstructorDays(); }
 
     function saveGroupFromConstructor() {
         const school = document.getElementById('adminSelectSchool').value;
         const group = document.getElementById('adminSelectGroup').value;
-        if (!school || !group) { alert('Выберите школу и группу!'); return; }
+        if (!school || !group) { alert('Выберите школу и группу'); return; }
         if (!siteData.fullSchedule[school]) siteData.fullSchedule[school] = {};
         siteData.fullSchedule[school][group] = JSON.parse(JSON.stringify(tempDays));
-        alert('Группа «' + group + '» сохранена! Нажмите «Сохранить всё» чтобы применить.');
+        alert('Группа «' + group + '» сохранена! Нажмите «Сохранить всё»');
     }
 
-    // ============ ФОТО ============
     function uploadPhotos(event) {
         const files = event.target.files;
         if (!files.length) return;
@@ -1138,48 +1187,58 @@
         }
     }
 
-    // ============ СОХРАНЕНИЕ ============
+    // ============ СОХРАНЕНИЕ В FIREBASE ============
     function saveAllChanges() {
         if (!adminLoggedIn) return;
-        try {
-            siteData.heroDesc = document.getElementById('adminHeroDesc').value || "#";
-            siteData.heroImage = document.getElementById('adminHeroImage').value || defaultData.heroImage;
-            siteData.phone = document.getElementById('adminPhone').value || "#";
-            siteData.email = document.getElementById('adminEmail').value || "#";
-            siteData.address = document.getElementById('adminAddress').value || "#";
-            siteData.hours = document.getElementById('adminHours').value || "#";
-            siteData.coaches = document.getElementById('adminCoaches').value.split('\n').filter(l => l.trim()).map(l => {
-                const p = l.split('|');
-                return { name: p[0]?.trim() || "#", role: p[1]?.trim() || "#" };
-            });
-            siteData.gallery = document.getElementById('adminGallery').value.split('\n').filter(l => l.trim());
+        
+        siteData.heroDesc = document.getElementById('adminHeroDesc').value || "#";
+        siteData.heroImage = document.getElementById('adminHeroImage').value || defaultData.heroImage;
+        siteData.phone = document.getElementById('adminPhone').value || "#";
+        siteData.email = document.getElementById('adminEmail').value || "#";
+        siteData.address = document.getElementById('adminAddress').value || "#";
+        siteData.hours = document.getElementById('adminHours').value || "#";
+        siteData.coaches = document.getElementById('adminCoaches').value.split('\n').filter(l => l.trim()).map(l => {
+            const p = l.split('|');
+            return { name: p[0]?.trim() || "#", role: p[1]?.trim() || "#" };
+        });
+        siteData.gallery = document.getElementById('adminGallery').value.split('\n').filter(l => l.trim());
 
-            localStorage.setItem('maximaSiteDataV3', JSON.stringify(siteData));
+        // Сохраняем локально (запасной вариант)
+        localStorage.setItem('maximaSiteDataV3', JSON.stringify(siteData));
+
+        // Сохраняем в Firebase
+        setSyncStatus('syncing');
+        SITE_DOC.set(siteData).then(function() {
+            setSyncStatus('online');
             galleryImages = siteData.gallery;
             renderAll();
-            updateAdminSelects();
-            document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
             selectedSchool = null;
             selectedGroup = null;
-            alert('Сохранено!');
-        } catch(e) {
-            alert('Ошибка: ' + e.message);
-        }
+            document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
+            alert('Сохранено');
+        }).catch(function(error) {
+            console.error('Ошибка сохранения:', error);
+            setSyncStatus('offline');
+            alert('Ошибка подключения');
+        });
     }
 
     function resetToDefault() {
         if (!adminLoggedIn) return;
-        if (confirm('Сбросить всё на решётки?')) {
+        if (confirm('Сбросить всё?')) {
             siteData = JSON.parse(JSON.stringify(defaultData));
             localStorage.setItem('maximaSiteDataV3', JSON.stringify(siteData));
-            galleryImages = [];
-            selectedSchool = null;
-            selectedGroup = null;
-            tempDays = [];
-            renderAll();
-            document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
-            fillAdminPanel();
-            alert('Сброшено');
+            SITE_DOC.set(siteData).then(function() {
+                setSyncStatus('online');
+                galleryImages = [];
+                selectedSchool = null;
+                selectedGroup = null;
+                tempDays = [];
+                renderAll();
+                document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
+                fillAdminPanel();
+                alert('Сброшено');
+            });
         }
     }
 
@@ -1211,7 +1270,7 @@
     });
 
     // ============ ПАРАЛЛАКС ============
-    const heroBgEl = document.querySelector('.hero-bg');
+    const heroBgEl = document.getElementById('heroBg');
     if (heroBgEl) {
         window.addEventListener('mousemove', function(e) {
             const x = (window.innerWidth / 2 - e.clientX) / 80;
@@ -1221,9 +1280,8 @@
     }
 
     // ============ СТАРТ ============
-    renderAll();
-    document.getElementById('scheduleBody').innerHTML = '<tr><td colspan="4" class="no-schedule">Выберите школу и группу</td></tr>';
-    console.log('🕺 Maxima Dance Club | Ctrl+~ админ-панель');
+    loadFromFirebase();
+    console.log(' Maxima Dance Club | Ctrl+~ админ-панель');
 </script>
 
 </body>
